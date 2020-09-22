@@ -1,3 +1,4 @@
+<%= link_to 'Back', projects_path, class: 'btn btn-dark mb-3' %>
 <div class="card">
   <div class="card-body">
     <h2 class='card-title d-flex justify-content-between mb-5'>
@@ -22,34 +23,35 @@
         </div>
       <% end %>
     
-      <div class="form-group">
-        <%= f.label :name %><br />
+      <div class="input-group">
         <%= f.text_field :name, class: 'form-control', placeholder: 'Enter task' %>
+        <div class="input-group-append">
+          <%= f.submit class: 'btn btn-primary' %>
+        </div>
       </div>
+        
       
-      <div class="form-group">
-        <%= f.submit class: 'btn btn-primary' %>
+    <% end %>
+
+    <h4>Tasks</h4>
+    <% @project.tasks.each do |task| %>
+      <% if task.persisted? %>
+        <div class="card">
+          <div class="card-body">
+            <span class="badge badge-primary"><%= task.status %></span>
+            <h5><%= task.name %></h5>
+            <p><%= task.description %></p>
+
+        </div>
       </div>
     <% end %>
+  <% end %>
+
   </div>
 </div>
-<p>
-  <strong>Name:</strong>
-  <%= @project.name %>
-</p>
-
-<p>
-  <strong>Description:</strong>
-  <%= @project.description %>
-</p>
-
-<p>
-  <strong>User:</strong>
-  <%= @project.user_id %>
-</p>
 
 
-<%= link_to 'Back', projects_path %>
+
 
 <hr>
 
