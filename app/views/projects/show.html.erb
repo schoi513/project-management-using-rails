@@ -8,6 +8,8 @@
       <%= link_to 'Destroy', @project, method: :delete, class: 'btn btn-danger', data: { confirm: 'Are you sure?'} %>
       </div>
     </h2>
+
+    <div class="mb-4">
     <h6>Add task</h6>
 
     <%= form_for([@task.project, @task]) do |f| %>
@@ -23,6 +25,7 @@
         </div>
       <% end %>
     
+      <%= f.hidden_field :status, value: 'not-started' %>
       <div class="input-group">
         <%= f.text_field :name, class: 'form-control', placeholder: 'Enter task' %>
         <div class="input-group-append">
@@ -32,6 +35,8 @@
         
       
     <% end %>
+    </div>
+    
 
     <h4>Tasks</h4>
     <% @project.tasks.each do |task| %>
@@ -39,9 +44,14 @@
         <div class="card">
           <div class="card-body">
             <span class="badge badge-primary"><%= task.status %></span>
-            <h5><%= task.name %></h5>
-            <p><%= task.description %></p>
-
+            <h5 class='card-title d-flex justify-content-between mb-5'>
+            <span><%= task.name %></span>
+            <div>
+              <%= link_to 'Edit', edit_project_task_path(task.project, task), class: 'btn btn-warning btn-sm' %>
+              <%= link_to 'Destroy', [task.project, task], method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger btn-sm' %>
+            </div> 
+          </h5>
+            <p><%= task.desctiption %></p>
         </div>
       </div>
     <% end %>
@@ -64,7 +74,7 @@
 <table>
   <tr>
     <th>Name</th>
-    <th>Desctiption</th>
+    <th>Description</th>
     <th>Status</th>
     <th>Project</th>
     <th></th>
